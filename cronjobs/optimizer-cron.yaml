@@ -1,0 +1,27 @@
+# Placeholder CronJob (we will mount scripts via ConfigMap later)
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: optimizer-job
+  namespace: default
+spec:
+  schedule: "0 1 * * *" # 1AM daily
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: optimizer
+            image: python:3.10-slim
+            command: ["bash", "-lc", "python /scripts/report_generator.py --usd 12.34 --kwh 100 --out /out/report.md"]
+            volumeMounts:
+              - name: scripts
+                mountPath: /scripts
+              - name: out
+                mountPath: /out
+          restartPolicy: OnFailure
+          volumes:
+            - name: scripts
+              emptyDir: {}   # replaced later by ConfigMap
+            - name: out
+              emptyDir: {}

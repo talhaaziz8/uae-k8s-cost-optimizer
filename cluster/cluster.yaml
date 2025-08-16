@@ -1,0 +1,13 @@
+# EKS Spot Cluster (Bahrain - me-south-1) — placeholder
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: uae-cost-optimizer
+  region: me-south-1
+managedNodeGroups:
+  - name: spot-workers
+    desiredCapacity: 2
+    minSize: 1
+    maxSize: 3
+    instanceTypes: ["t3.small", "t3.medium"]
+    spot: true
