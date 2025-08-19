@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cost-optimizer-cron
+  namespace: cost-optimizer
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cost-optimizer-engine
+            image: cost-optimizer-engine:local
+            imagePullPolicy: IfNotPresent
+          restartPolicy: OnFailure

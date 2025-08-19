@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cost-optimizer-engine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cost-optimizer-engine
+  template:
+    metadata:
+      labels:
+        app: cost-optimizer-engine
+    spec:
+      containers:
+        - name: engine
+          image: cost-optimizer-engine:local
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cost-optimizer-engine-service
+spec:
+  selector:
+    app: cost-optimizer-engine
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
+

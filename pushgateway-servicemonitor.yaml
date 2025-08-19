@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: pushgateway
+  namespace: cost-optimizer
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: prometheus-pushgateway
+  namespaceSelector:
+    matchNames:
+      - cost-optimizer
+  endpoints:
+    - port: http          # << use the name from Service
+      path: /metrics
+      interval: 15s
+

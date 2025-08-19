@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-additional-scrape-configs
+  namespace: cost-optimizer
+data:
+  additional-scrape-configs.yaml: |
+    - job_name: 'cost-optimizer-engine'
+      static_configs:
+        - targets: ['prometheus-prometheus-pushgateway:9091']
+

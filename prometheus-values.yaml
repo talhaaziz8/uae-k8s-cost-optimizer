@@ -1,0 +1,30 @@
+# prometheus-values.yaml
+
+# Prometheus server configuration
+serverFiles:
+  prometheus.yml:
+    additionalScrapeConfigs: "configmap://kube-state-metrics-scrape"
+
+# Enable Pushgateway
+pushgateway:
+  enabled: true
+  service:
+    type: ClusterIP
+
+# Grafana configuration
+grafana:
+  enabled: true
+  service:
+    type: NodePort
+    nodePort: 32001
+  adminUser: admin
+  adminPassword: admin123
+
+# Optional: kube-state-metrics
+kubeStateMetrics:
+  enabled: true
+
+# Optional: node exporter for cluster metrics
+prometheusNodeExporter:
+  enabled: true
+
